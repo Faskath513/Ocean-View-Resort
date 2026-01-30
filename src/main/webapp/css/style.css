@@ -22,26 +22,79 @@ body {
 
 /* Navbar Styles */
 .navbar {
-    background: linear-gradient(to right, var(--ocean-blue), var(--primary-blue)) !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: linear-gradient(90deg, var(--ocean-blue) 0%, var(--primary-blue) 100%) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 0.5rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar .container, .navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: white !important;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
 
-.nav-link {
-    color: rgba(255,255,255,0.9) !important;
-    transition: all 0.3s ease;
-    margin: 0 5px;
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.18);
 }
 
-.nav-link:hover {
-    color: white !important;
+.navbar-toggler-icon {
+    filter: invert(1) brightness(2) contrast(1.2);
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255,255,255,0.95) !important;
+    transition: all 0.22s ease;
+    margin: 0 6px;
+    padding: 0.45rem 0.75rem;
+    border-radius: 8px;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link.active {
+    color: #fff !important;
+    background: rgba(255,255,255,0.06);
     transform: translateY(-2px);
+    box-shadow: none;
+}
+
+.welcome-badge {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: white;
+    font-weight: 600;
+}
+
+/* Make sure collapsed menu links are visible on dark background */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: linear-gradient(180deg, var(--ocean-blue), var(--primary-blue));
+        padding: 12px 16px;
+        border-radius: 8px;
+    }
+    .navbar-nav .nav-link {
+        color: rgba(255,255,255,0.98) !important;
+        margin: 6px 0;
+    }
 }
 
 /* Login Container */
