@@ -1,55 +1,130 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <!DOCTYPE html>
-        <html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-        <head>
-            <title>${room != null ? 'Edit Room' : 'New Room'}</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Reservation - Ocean View Resort</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+</head>
 
-        <body>
-            <div class="container mt-4">
-                <h2>${room != null ? 'Edit Room' : 'Add New Room'}</h2>
-                <form action="${pageContext.request.contextPath}/rooms" method="post">
-                    <c:if test="${room != null}">
-                        <input type="hidden" name="id" value="${room.id}">
-                    </c:if>
+<body class="bg-muted">
+<div class="container mt-5 fade-in">
+    <div class="dashboard-card">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <h2 class="text-primary"><i class="bi bi-calendar-plus"></i> New Reservation</h2>
+            <p class="text-muted">Fill in the guest and booking details below</p>
+        </div>
 
-                    <div class="mb-3">
-                        <label>Room Number</label>
-                        <input type="text" name="roomNumber" class="form-control" value="${room.roomNumber}" required>
-                    </div>
+        <!-- Error -->
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger">${error}</div>
+        </c:if>
 
-                    <div class="mb-3">
-                        <label>Type</label>
-                        <select name="type" class="form-control">
-                            <option value="SINGLE" ${room.type=='SINGLE' ? 'selected' : '' }>Single</option>
-                            <option value="DOUBLE" ${room.type=='DOUBLE' ? 'selected' : '' }>Double</option>
-                            <option value="SUITE" ${room.type=='SUITE' ? 'selected' : '' }>Suite</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Price Per Night</label>
-                        <input type="number" step="0.01" name="price" class="form-control" value="${room.pricePerNight}"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Status</label>
-                        <select name="status" class="form-control">
-                            <option value="AVAILABLE" ${room.status=='AVAILABLE' ? 'selected' : '' }>Available</option>
-                            <option value="OCCUPIED" ${room.status=='OCCUPIED' ? 'selected' : '' }>Occupied</option>
-                            <option value="MAINTENANCE" ${room.status=='MAINTENANCE' ? 'selected' : '' }>Maintenance
-                            </option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <a href="${pageContext.request.contextPath}/rooms" class="btn btn-secondary">Cancel</a>
-                </form>
+        <form action="${pageContext.request.contextPath}/reservations" method="post">
+            <!-- Guest Info -->
+            <h5 class="form-section-title text-primary">Guest Information</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Guest Name</label>
+                    <input type="text" name="guestName" class="form-control" value="${reservation.guestName}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Guest Email</label>
+                    <input type="email" name="guestEmail" class="form-control" value="${reservation.guestEmail}" required>
+                </div>
             </div>
-        </body>
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" name="guestPhone" class="form-control" value="${reservation.guestPhone}" required>
+            </div>
 
-        </html>
+            <!-- Address Info -->
+            <h5 class="form-section-title text-primary">Guest Address</h5>
+            <div class="mb-3">
+                <label class="form-label">Street Address</label>
+                <input type="text" name="guestAddressStreet" class="form-control" value="${reservation.guestAddressStreet}" required>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">City</label>
+                    <input type="text" name="guestAddressCity" class="form-control" value="${reservation.guestAddressCity}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">State/Province</label>
+                    <input type="text" name="guestAddressState" class="form-control" value="${reservation.guestAddressState}" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Zip/Postal Code</label>
+                    <input type="text" name="guestAddressZip" class="form-control" value="${reservation.guestAddressZip}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Country</label>
+                    <input type="text" name="guestAddressCountry" class="form-control" value="${reservation.guestAddressCountry}" required>
+                </div>
+            </div>
+
+            <!-- Booking Details -->
+            <h5 class="form-section-title text-primary">Booking Details</h5>
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label class="form-label">Room</label>
+                    <select id="roomSelect" name="roomId" class="form-control" required onchange="updateRoomType()">
+                        <option value="">Select Room</option>
+                        <c:forEach var="room" items="${rooms}">
+                            <option value="${room.id}" data-type="${room.type}" ${reservation.roomId==room.id ? 'selected' : ''}>
+                                Room ${room.roomNumber} (${room.type}) - $${room.pricePerNight}/night
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Room Type</label>
+                    <input type="text" id="roomType" name="roomType" class="form-control" readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Check In</label>
+                    <input type="date" name="checkIn" class="form-control" value="${reservation.checkInDate}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Check Out</label>
+                    <input type="date" name="checkOut" class="form-control" value="${reservation.checkOutDate}" required>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check2-circle"></i> Create Reservation
+                </button>
+                <a href="${pageContext.request.contextPath}/reservations" class="btn btn-outline-primary">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateRoomType() {
+        const select = document.getElementById('roomSelect');
+        const selectedOption = select.options[select.selectedIndex];
+        const roomType = selectedOption.getAttribute('data-type') || '';
+        document.getElementById('roomType').value = roomType;
+    }
+    document.addEventListener('DOMContentLoaded', updateRoomType);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
