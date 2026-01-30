@@ -10,6 +10,11 @@ public class Reservation implements Serializable {
     private String guestName;
     private String guestEmail;
     private String guestPhone;
+    private String guestAddressStreet;
+    private String guestAddressCity;
+    private String guestAddressState;
+    private String guestAddressZip;
+    private String guestAddressCountry;
     private int roomId;
     private Date checkInDate;
     private Date checkOutDate;
@@ -91,6 +96,46 @@ public class Reservation implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getGuestAddressStreet() {
+        return guestAddressStreet;
+    }
+
+    public void setGuestAddressStreet(String guestAddressStreet) {
+        this.guestAddressStreet = guestAddressStreet;
+    }
+
+    public String getGuestAddressCity() {
+        return guestAddressCity;
+    }
+
+    public void setGuestAddressCity(String guestAddressCity) {
+        this.guestAddressCity = guestAddressCity;
+    }
+
+    public String getGuestAddressState() {
+        return guestAddressState;
+    }
+
+    public void setGuestAddressState(String guestAddressState) {
+        this.guestAddressState = guestAddressState;
+    }
+
+    public String getGuestAddressZip() {
+        return guestAddressZip;
+    }
+
+    public void setGuestAddressZip(String guestAddressZip) {
+        this.guestAddressZip = guestAddressZip;
+    }
+
+    public String getGuestAddressCountry() {
+        return guestAddressCountry;
+    }
+
+    public void setGuestAddressCountry(String guestAddressCountry) {
+        this.guestAddressCountry = guestAddressCountry;
     }
 
     public Room getRoom() {

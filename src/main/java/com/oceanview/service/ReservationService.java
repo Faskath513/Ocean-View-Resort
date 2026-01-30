@@ -19,6 +19,12 @@ public class ReservationService {
         this.roomDAO = new RoomDAO();
     }
 
+    // Constructor for testing (Dependency Injection)
+    public ReservationService(ReservationDAO reservationDAO, RoomDAO roomDAO) {
+        this.reservationDAO = reservationDAO;
+        this.roomDAO = roomDAO;
+    }
+
     public List<Reservation> getAllReservations() {
         return reservationDAO.findAll();
     }

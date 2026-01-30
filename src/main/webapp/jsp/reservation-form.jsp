@@ -36,6 +36,38 @@
                             required>
                     </div>
 
+                    <!-- Address Section -->
+                    <h4 class="mt-4 mb-3">Guest Address</h4>
+                    <div class="mb-3">
+                        <label>Street Address</label>
+                        <input type="text" name="guestAddressStreet" class="form-control"
+                            value="${reservation.guestAddressStreet}" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>City</label>
+                            <input type="text" name="guestAddressCity" class="form-control"
+                                value="${reservation.guestAddressCity}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>State/Province</label>
+                            <input type="text" name="guestAddressState" class="form-control"
+                                value="${reservation.guestAddressState}" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Zip/Postal Code</label>
+                            <input type="text" name="guestAddressZip" class="form-control"
+                                value="${reservation.guestAddressZip}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Country</label>
+                            <input type="text" name="guestAddressCountry" class="form-control"
+                                value="${reservation.guestAddressCountry}" required>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label>Room</label>
                         <select name="roomId" class="form-control" required>

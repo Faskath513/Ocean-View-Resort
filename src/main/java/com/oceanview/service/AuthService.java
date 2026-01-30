@@ -11,15 +11,15 @@ public class AuthService {
     public AuthService() {
         this.userDAO = new UserDAO();
     }
-    
-    // For dependency injection/testing
+
+    // Constructor for testing
     public AuthService(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
     public Optional<User> authenticate(String username, String password) {
         Optional<User> userOpt = userDAO.findByUsername(username);
-        
+
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             if (BCrypt.checkpw(password, user.getPasswordHash())) {

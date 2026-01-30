@@ -12,6 +12,7 @@ public class RoomService {
         this.roomDAO = new RoomDAO();
     }
 
+    // Constructor for testing
     public RoomService(RoomDAO roomDAO) {
         this.roomDAO = roomDAO;
     }

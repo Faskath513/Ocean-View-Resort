@@ -62,17 +62,22 @@ public class ReservationDAO {
     }
 
     public boolean save(Reservation res) {
-        String sql = "INSERT INTO reservations (guest_name, guest_email, guest_phone, room_id, check_in_date, check_out_date, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservations (guest_name, guest_email, guest_phone, guest_address_street, guest_address_city, guest_address_state, guest_address_zip, guest_address_country, room_id, check_in_date, check_out_date, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, res.getGuestName());
             stmt.setString(2, res.getGuestEmail());
             stmt.setString(3, res.getGuestPhone());
-            stmt.setInt(4, res.getRoomId());
-            stmt.setDate(5, res.getCheckInDate());
-            stmt.setDate(6, res.getCheckOutDate());
-            stmt.setBigDecimal(7, res.getTotalAmount());
-            stmt.setString(8, res.getStatus());
+            stmt.setString(4, res.getGuestAddressStreet());
+            stmt.setString(5, res.getGuestAddressCity());
+            stmt.setString(6, res.getGuestAddressState());
+            stmt.setString(7, res.getGuestAddressZip());
+            stmt.setString(8, res.getGuestAddressCountry());
+            stmt.setInt(9, res.getRoomId());
+            stmt.setDate(10, res.getCheckInDate());
+            stmt.setDate(11, res.getCheckOutDate());
+            stmt.setBigDecimal(12, res.getTotalAmount());
+            stmt.setString(13, res.getStatus());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,6 +97,11 @@ public class ReservationDAO {
                 res.setGuestName(rs.getString("guest_name"));
                 res.setGuestEmail(rs.getString("guest_email"));
                 res.setGuestPhone(rs.getString("guest_phone"));
+                res.setGuestAddressStreet(rs.getString("guest_address_street"));
+                res.setGuestAddressCity(rs.getString("guest_address_city"));
+                res.setGuestAddressState(rs.getString("guest_address_state"));
+                res.setGuestAddressZip(rs.getString("guest_address_zip"));
+                res.setGuestAddressCountry(rs.getString("guest_address_country"));
                 res.setRoomId(rs.getInt("room_id"));
                 res.setCheckInDate(rs.getDate("check_in_date"));
                 res.setCheckOutDate(rs.getDate("check_out_date"));

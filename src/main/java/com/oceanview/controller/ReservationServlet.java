@@ -52,6 +52,11 @@ public class ReservationServlet extends HttpServlet {
         res.setGuestName(req.getParameter("guestName"));
         res.setGuestEmail(req.getParameter("guestEmail"));
         res.setGuestPhone(req.getParameter("guestPhone"));
+        res.setGuestAddressStreet(req.getParameter("guestAddressStreet"));
+        res.setGuestAddressCity(req.getParameter("guestAddressCity"));
+        res.setGuestAddressState(req.getParameter("guestAddressState"));
+        res.setGuestAddressZip(req.getParameter("guestAddressZip"));
+        res.setGuestAddressCountry(req.getParameter("guestAddressCountry"));
         res.setRoomId(Integer.parseInt(req.getParameter("roomId")));
         res.setCheckInDate(Date.valueOf(req.getParameter("checkIn")));
         res.setCheckOutDate(Date.valueOf(req.getParameter("checkOut")));
