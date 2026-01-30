@@ -1,157 +1,107 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-    if (session.getAttribute("user") == null) {
-        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-        return;
-    }
-%>
+        <% if (session.getAttribute("user")==null) { response.sendRedirect(request.getContextPath() + "/jsp/login.jsp"
+            ); return; } %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard | Ocean View Resort</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+            <!DOCTYPE html>
+            <html lang="en">
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+            <head>
+                <meta charset="UTF-8">
+                <title>Dashboard | Ocean View Resort</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Custom Theme -->
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-</head>
+                <!-- Bootstrap -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+                    rel="stylesheet">
 
-<body>
+                <!-- Custom Theme -->
+                <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+            </head>
 
-<!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand" href="#">
-            <i class="bi bi-water"></i> Ocean View Resort
-        </a>
+            <body>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                <!-- ================= NAVBAR ================= -->
+                <jsp:include page="/jsp/includes/navbar.jsp" />
 
-        <div class="collapse navbar-collapse" id="mainNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/reservations">
-                        <i class="bi bi-calendar-event"></i> Reservations
-                    </a>
-                </li>
+                <!-- ================= CONTENT ================= -->
+                <div class="container-fluid px-4 py-4">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/rooms">
-                        <i class="bi bi-door-closed"></i> Rooms
-                    </a>
-                </li>
+                    <!-- HERO -->
+                    <div class="dashboard-hero fade-in">
+                        <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
+                        <p class="mt-2 mb-0">
+                            Welcome back, <strong>${user.username}</strong>.
+                            Manage reservations, rooms, and reports from one place.
+                        </p>
+                    </div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/reports">
-                        <i class="bi bi-bar-chart"></i> Reports
-                    </a>
-                </li>
+                    <!-- CARDS -->
+                    <div class="dashboard-grid">
 
-                <li class="nav-item">
-                    <span class="nav-link welcome-badge">
-                        <i class="bi bi-person-circle"></i>
-                        ${user.username} (${user.role})
-                    </span>
-                </li>
+                        <!-- Reservations -->
+                        <div class="dashboard-card fade-in">
+                            <div>
+                                <div class="dashboard-icon">
+                                    <i class="bi bi-calendar-event"></i>
+                                </div>
+                                <h5>Reservations</h5>
+                                <p>Create, update, and manage guest reservations.</p>
+                            </div>
+                            <a href="${pageContext.request.contextPath}/reservations" class="btn btn-primary mt-3">
+                                Manage Reservations →
+                            </a>
+                        </div>
 
-                <li class="nav-item">
-                    <a class="btn btn-danger btn-sm ms-lg-2"
-                       href="${pageContext.request.contextPath}/auth?action=logout">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                        <!-- Rooms -->
+                        <div class="dashboard-card fade-in">
+                            <div>
+                                <div class="dashboard-icon">
+                                    <i class="bi bi-door-closed"></i>
+                                </div>
+                                <h5>Rooms</h5>
+                                <p>Manage room types, rates, and availability.</p>
+                            </div>
+                            <a href="${pageContext.request.contextPath}/rooms" class="btn btn-outline-primary mt-3">
+                                Manage Rooms →
+                            </a>
+                        </div>
 
-<!-- ================= CONTENT ================= -->
-<div class="container-fluid px-4 py-4">
+                        <!-- Reports -->
+                        <div class="dashboard-card fade-in">
+                            <div>
+                                <div class="dashboard-icon">
+                                    <i class="bi bi-bar-chart"></i>
+                                </div>
+                                <h5>Reports</h5>
+                                <p>View revenue, occupancy, and analytics reports.</p>
+                            </div>
+                            <a href="${pageContext.request.contextPath}/reports" class="btn btn-outline-primary mt-3">
+                                View Reports →
+                            </a>
+                        </div>
 
-    <!-- HERO -->
-    <div class="dashboard-hero fade-in">
-        <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
-        <p class="mt-2 mb-0">
-            Welcome back, <strong>${user.username}</strong>.  
-            Manage reservations, rooms, and reports from one place.
-        </p>
-    </div>
+                        <!-- Help -->
+                        <div class="dashboard-card fade-in">
+                            <div>
+                                <div class="dashboard-icon">
+                                    <i class="bi bi-question-circle"></i>
+                                </div>
+                                <h5>Help & Support</h5>
+                                <p>Learn how to use the system effectively.</p>
+                            </div>
+                            <a href="${pageContext.request.contextPath}/jsp/help.jsp"
+                                class="btn btn-outline-secondary mt-3">
+                                Open Help →
+                            </a>
+                        </div>
 
-    <!-- CARDS -->
-    <div class="dashboard-grid">
-
-        <!-- Reservations -->
-        <div class="dashboard-card fade-in">
-            <div>
-                <div class="dashboard-icon">
-                    <i class="bi bi-calendar-event"></i>
+                    </div>
                 </div>
-                <h5>Reservations</h5>
-                <p>Create, update, and manage guest reservations.</p>
-            </div>
-            <a href="${pageContext.request.contextPath}/reservations"
-               class="btn btn-primary mt-3">
-                Manage Reservations →
-            </a>
-        </div>
 
-        <!-- Rooms -->
-        <div class="dashboard-card fade-in">
-            <div>
-                <div class="dashboard-icon">
-                    <i class="bi bi-door-closed"></i>
-                </div>
-                <h5>Rooms</h5>
-                <p>Manage room types, rates, and availability.</p>
-            </div>
-            <a href="${pageContext.request.contextPath}/rooms"
-               class="btn btn-outline-primary mt-3">
-                Manage Rooms →
-            </a>
-        </div>
+                <jsp:include page="/jsp/includes/footer.jsp" />
+            </body>
 
-        <!-- Reports -->
-        <div class="dashboard-card fade-in">
-            <div>
-                <div class="dashboard-icon">
-                    <i class="bi bi-bar-chart"></i>
-                </div>
-                <h5>Reports</h5>
-                <p>View revenue, occupancy, and analytics reports.</p>
-            </div>
-            <a href="${pageContext.request.contextPath}/reports"
-               class="btn btn-outline-primary mt-3">
-                View Reports →
-            </a>
-        </div>
-
-        <!-- Help -->
-        <div class="dashboard-card fade-in">
-            <div>
-                <div class="dashboard-icon">
-                    <i class="bi bi-question-circle"></i>
-                </div>
-                <h5>Help & Support</h5>
-                <p>Learn how to use the system effectively.</p>
-            </div>
-            <a href="${pageContext.request.contextPath}/jsp/help.jsp"
-               class="btn btn-outline-secondary mt-3">
-                Open Help →
-            </a>
-        </div>
-
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+            </html>
