@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     guest_address_zip VARCHAR(20),
     guest_address_country VARCHAR(50),
     room_id INT NOT NULL,
+    room_type VARCHAR(50), 
     check_in_date DATE NOT NULL,
     check_out_date DATE NOT NULL,
     total_amount DECIMAL(10, 2),

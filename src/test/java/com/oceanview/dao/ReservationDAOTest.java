@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.math.BigDecimal;
+import com.oceanview.model.Reservation;
+import static org.mockito.ArgumentMatchers.any;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -69,6 +72,33 @@ public class ReservationDAOTest {
             boolean result = dao.checkAvailability(101, Date.valueOf("2023-10-01"), Date.valueOf("2023-10-05"));
 
             assertFalse(result, "Room should NOT be available when count is > 0");
+        }
+    }
+
+    @Test
+    public void testSaveReservation() throws Exception {
+        try (MockedStatic<DatabaseConnection> mockedDb = Mockito.mockStatic(DatabaseConnection.class)) {
+            DatabaseConnection dbInstance = mock(DatabaseConnection.class);
+            mockedDb.when(DatabaseConnection::getInstance).thenReturn(dbInstance);
+            when(dbInstance.getConnection()).thenReturn(connection);
+
+            when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+            when(preparedStatement.executeUpdate()).thenReturn(1);
+
+            Reservation res = new Reservation();
+            res.setGuestName("John Doe");
+            res.setRoomId(101);
+            res.setRoomType("SINGLE");
+            res.setCheckInDate(Date.valueOf("2023-10-01"));
+            res.setCheckOutDate(Date.valueOf("2023-10-05"));
+            res.setTotalAmount(new BigDecimal("400.00"));
+            res.setStatus("PENDING");
+
+            ReservationDAO dao = new ReservationDAO();
+            boolean result = dao.save(res);
+
+            assertTrue(result, "Reservation should be saved successfully");
+            verify(preparedStatement).setString(10, "SINGLE"); // Verify roomType is set at parameter 10
         }
     }
 }

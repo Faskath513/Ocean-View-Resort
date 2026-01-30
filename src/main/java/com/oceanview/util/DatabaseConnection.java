@@ -20,7 +20,7 @@ public class DatabaseConnection {
                 return;
             }
             properties.load(input);
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -36,10 +36,9 @@ public class DatabaseConnection {
     public Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection(
-                properties.getProperty("db.url"),
-                properties.getProperty("db.user"),
-                properties.getProperty("db.password")
-            );
+                    properties.getProperty("db.url"),
+                    properties.getProperty("db.user"),
+                    properties.getProperty("db.password"));
         }
         return connection;
     }

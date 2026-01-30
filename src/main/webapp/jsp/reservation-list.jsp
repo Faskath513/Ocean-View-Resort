@@ -26,10 +26,12 @@
                                 <th>ID</th>
                                 <th>Guest</th>
                                 <th>Room</th>
+                                <th>Room Type</th>
                                 <th>Check In</th>
                                 <th>Check Out</th>
                                 <th>Total</th>
                                 <th>Status</th>
+                                <th>Bill</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -46,6 +48,9 @@
                                         <c:out value="${res.room.roomNumber}" />
                                     </td>
                                     <td>
+                                        <c:out value="${res.roomType}" />
+                                    </td>
+                                    <td>
                                         <c:out value="${res.checkInDate}" />
                                     </td>
                                     <td>
@@ -59,6 +64,10 @@
                                             class="badge bg-${res.status == 'CONFIRMED' ? 'success' : (res.status == 'CANCELLED' ? 'danger' : 'warning')}">
                                             <c:out value="${res.status}" />
                                         </span>
+                                    </td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/billing?action=generate&reservationId=${res.id}"
+                                            class="btn btn-sm btn-info text-white">View Bill</a>
                                     </td>
                                     <td>
                                         <c:if test="${res.status == 'PENDING'}">

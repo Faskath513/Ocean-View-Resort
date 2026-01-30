@@ -20,6 +20,13 @@ public class BillingService {
         this.pricingStrategy = new StandardPricingStrategy(); // Default strategy
     }
 
+    // Constructor for testing
+    public BillingService(BillDAO billDAO, ReservationDAO reservationDAO) {
+        this.billDAO = billDAO;
+        this.reservationDAO = reservationDAO;
+        this.pricingStrategy = new StandardPricingStrategy();
+    }
+
     public void setPricingStrategy(PricingStrategy strategy) {
         this.pricingStrategy = strategy;
     }
@@ -31,8 +38,7 @@ public class BillingService {
             return existing;
 
         // Get Reservation
-        Optional<Reservation> resOpt = reservationDAO.findAll().stream()
-                .filter(r -> r.getId() == reservationId).findFirst(); // Inefficient, should add findById to DAO
+        Optional<Reservation> resOpt = reservationDAO.findById(reservationId);
 
         if (resOpt.isPresent()) {
             Reservation res = resOpt.get();

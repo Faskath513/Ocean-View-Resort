@@ -62,7 +62,7 @@ public class ReservationDAO {
     }
 
     public boolean save(Reservation res) {
-        String sql = "INSERT INTO reservations (guest_name, guest_email, guest_phone, guest_address_street, guest_address_city, guest_address_state, guest_address_zip, guest_address_country, room_id, check_in_date, check_out_date, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservations (guest_name, guest_email, guest_phone, guest_address_street, guest_address_city, guest_address_state, guest_address_zip, guest_address_country, room_id, room_type, check_in_date, check_out_date, total_amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, res.getGuestName());
@@ -74,10 +74,11 @@ public class ReservationDAO {
             stmt.setString(7, res.getGuestAddressZip());
             stmt.setString(8, res.getGuestAddressCountry());
             stmt.setInt(9, res.getRoomId());
-            stmt.setDate(10, res.getCheckInDate());
-            stmt.setDate(11, res.getCheckOutDate());
-            stmt.setBigDecimal(12, res.getTotalAmount());
-            stmt.setString(13, res.getStatus());
+            stmt.setString(10, res.getRoomType());
+            stmt.setDate(11, res.getCheckInDate());
+            stmt.setDate(12, res.getCheckOutDate());
+            stmt.setBigDecimal(13, res.getTotalAmount());
+            stmt.setString(14, res.getStatus());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,6 +104,7 @@ public class ReservationDAO {
                 res.setGuestAddressZip(rs.getString("guest_address_zip"));
                 res.setGuestAddressCountry(rs.getString("guest_address_country"));
                 res.setRoomId(rs.getInt("room_id"));
+                res.setRoomType(rs.getString("room_type"));
                 res.setCheckInDate(rs.getDate("check_in_date"));
                 res.setCheckOutDate(rs.getDate("check_out_date"));
                 res.setTotalAmount(rs.getBigDecimal("total_amount"));
@@ -132,5 +134,36 @@ public class ReservationDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Optional<Reservation> findById(int id) {
+        String sql = "SELECT * FROM reservations WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Reservation res = new Reservation();
+                res.setId(rs.getInt("id"));
+                res.setGuestName(rs.getString("guest_name"));
+                res.setGuestEmail(rs.getString("guest_email"));
+                res.setGuestPhone(rs.getString("guest_phone"));
+                res.setGuestAddressStreet(rs.getString("guest_address_street"));
+                res.setGuestAddressCity(rs.getString("guest_address_city"));
+                res.setGuestAddressState(rs.getString("guest_address_state"));
+                res.setGuestAddressZip(rs.getString("guest_address_zip"));
+                res.setGuestAddressCountry(rs.getString("guest_address_country"));
+                res.setRoomId(rs.getInt("room_id"));
+                res.setRoomType(rs.getString("room_type"));
+                res.setCheckInDate(rs.getDate("check_in_date"));
+                res.setCheckOutDate(rs.getDate("check_out_date"));
+                res.setTotalAmount(rs.getBigDecimal("total_amount"));
+                res.setStatus(rs.getString("status"));
+                return Optional.of(res);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 }

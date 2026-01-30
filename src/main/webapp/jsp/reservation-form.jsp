@@ -68,16 +68,22 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label>Room</label>
-                        <select name="roomId" class="form-control" required>
-                            <option value="">Select Room</option>
-                            <c:forEach var="room" items="${rooms}">
-                                <option value="${room.id}" ${reservation.roomId==room.id ? 'selected' : '' }>
-                                    Room ${room.roomNumber} (${room.type}) - $${room.pricePerNight}/night
-                                </option>
-                            </c:forEach>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-8 mb-3">
+                            <label>Room</label>
+                            <select id="roomSelect" name="roomId" class="form-control" required onchange="updateRoomType()">
+                                <option value="">Select Room</option>
+                                <c:forEach var="room" items="${rooms}">
+                                    <option value="${room.id}" data-type="${room.type}" ${reservation.roomId==room.id ? 'selected' : '' }>
+                                        Room ${room.roomNumber} (${room.type}) - $${room.pricePerNight}/night
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Room Type</label>
+                            <input type="text" id="roomType" name="roomType" class="form-control" readonly>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -99,4 +105,15 @@
             </div>
         </body>
 
-        </html>
+        <script>
+            function updateRoomType() {
+                const select = document.getElementById('roomSelect');
+                const selectedOption = select.options[select.selectedIndex];
+                const roomType = selectedOption.getAttribute('data-type') || '';
+                document.getElementById('roomType').value = roomType;
+            }
+            
+            // Initialize room type on page load
+            document.addEventListener('DOMContentLoaded', updateRoomType);
+        </script>
+    </html>

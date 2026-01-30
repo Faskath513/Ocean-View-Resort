@@ -41,6 +41,7 @@ public class ReservationService {
         Optional<Room> roomOpt = roomDAO.findById(res.getRoomId());
         if (roomOpt.isPresent()) {
             Room room = roomOpt.get();
+            res.setRoomType(room.getType());
             long days = ChronoUnit.DAYS.between(res.getCheckInDate().toLocalDate(),
                     res.getCheckOutDate().toLocalDate());
             if (days < 1)

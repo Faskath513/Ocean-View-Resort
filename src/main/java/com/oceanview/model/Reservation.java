@@ -3,7 +3,6 @@ package com.oceanview.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 
 public class Reservation implements Serializable {
     private int id;
@@ -16,6 +15,7 @@ public class Reservation implements Serializable {
     private String guestAddressZip;
     private String guestAddressCountry;
     private int roomId;
+    private String roomType;
     private Date checkInDate;
     private Date checkOutDate;
     private BigDecimal totalAmount;
@@ -64,6 +64,14 @@ public class Reservation implements Serializable {
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     public Date getCheckInDate() {
