@@ -191,11 +191,11 @@
                 </form>
 
                 <!-- Demo Credentials -->
-                <div class="alert alert-info demo-info mt-3">
+                <!-- <div class="alert alert-info demo-info mt-3">
                     <strong>Demo Credentials:</strong><br>
                     Admin: <code>admin</code> / <code>password123</code><br>
                     Staff: <code>staff</code> / <code>password123</code>
-                </div>
+                </div> -->
 
                 <!-- Quick Tips -->
                 <div class="mt-3 text-center text-muted" style="font-size: 0.85rem;">

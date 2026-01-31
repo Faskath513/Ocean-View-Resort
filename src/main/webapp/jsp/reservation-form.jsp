@@ -27,14 +27,14 @@
 
                 .reservation-header h2 {
                     font-weight: 700;
-                    color: #1e5fa8;
+                    color: #117789;
                 }
 
                 .form-section-title {
                     font-weight: 600;
                     margin-top: 30px;
                     margin-bottom: 15px;
-                    color: #0d6efd;
+                    color: #076274;
                 }
 
                 .btn-submit {
