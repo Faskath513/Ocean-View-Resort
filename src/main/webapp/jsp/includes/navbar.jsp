@@ -28,18 +28,29 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <span class="nav-link welcome-badge">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle"></i>
-                        ${user.username} (${user.role})
-                    </span>
-                </li>
-
-                <li class="nav-item">
-                    <a class="btn btn-danger btn-sm ms-lg-2"
-                        href="${pageContext.request.contextPath}/auth?action=logout">
-                        <i class="bi bi-box-arrow-right"></i> Logout
+                        ${user.username}
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/profile.jsp">
+                                <i class="bi bi-person"></i> My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="${pageContext.request.contextPath}/jsp/reset-password.jsp">
+                                <i class="bi bi-shield-lock"></i> Reset Password
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/auth?action=logout">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

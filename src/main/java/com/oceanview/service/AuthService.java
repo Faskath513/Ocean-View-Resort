@@ -28,4 +28,54 @@ public class AuthService {
         }
         return Optional.empty();
     }
+
+    public boolean resetPassword(int userId, String currentPassword, String newPassword) {
+        Optional<User> userOpt = userDAO.findById(userId);
+        
+        if (!userOpt.isPresent()) {
+            return false;
+        }
+
+        User user = userOpt.get();
+        
+        // Verify current password
+        if (!BCrypt.checkpw(currentPassword, user.getPasswordHash())) {
+            return false;
+        }
+
+        // Hash new password
+        String newPasswordHash = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+
+        // Update password in database
+        return userDAO.updatePassword(userId, newPasswordHash);
+    }
+
+    public boolean isValidPassword(String password) {
+        // Password must be at least 8 characters
+        if (password.length() < 8) {
+            return false;
+        }
+        
+        // Must contain uppercase
+        if (!password.matches(".*[A-Z].*")) {
+            return false;
+        }
+        
+        // Must contain lowercase
+        if (!password.matches(".*[a-z].*")) {
+            return false;
+        }
+        
+        // Must contain number
+        if (!password.matches(".*\\d.*")) {
+            return false;
+        }
+        
+        // Must contain special character
+        if (!password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?].*")) {
+            return false;
+        }
+        
+        return true;
+    }
 }

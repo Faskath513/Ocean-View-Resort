@@ -48,4 +48,39 @@ public class BillDAO {
         }
         return Optional.empty();
     }
+
+    public java.util.List<Bill> findAll() {
+        java.util.List<Bill> list = new java.util.ArrayList<>();
+        String sql = "SELECT b.*, r.guest_name, rm.room_number FROM bills b LEFT JOIN reservations r ON b.reservation_id = r.id LEFT JOIN rooms rm ON r.room_id = rm.id ORDER BY b.generated_at DESC";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Bill bill = new Bill();
+                bill.setId(rs.getInt("id"));
+                bill.setReservationId(rs.getInt("reservation_id"));
+                bill.setRoomCharge(rs.getBigDecimal("room_charge"));
+                bill.setTaxAmount(rs.getBigDecimal("tax_amount"));
+                bill.setServiceCharge(rs.getBigDecimal("service_charge"));
+                bill.setTotalAmount(rs.getBigDecimal("total_amount"));
+                bill.setPaymentStatus(rs.getString("payment_status"));
+                bill.setGeneratedAt(rs.getTimestamp("generated_at"));
+
+                // minimal reservation info
+                com.oceanview.model.Reservation res = new com.oceanview.model.Reservation();
+                res.setId(rs.getInt("reservation_id"));
+                res.setGuestName(rs.getString("guest_name"));
+                com.oceanview.model.Room room = new com.oceanview.model.Room();
+                room.setRoomNumber(rs.getString("room_number"));
+                res.setRoom(room);
+                bill.setReservation(res);
+
+                list.add(bill);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
