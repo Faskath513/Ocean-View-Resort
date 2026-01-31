@@ -279,3 +279,90 @@ body {
         padding: 30px;
     }
 }
+
+
+/* =========================================================
+   ROOM MANAGEMENT – UI ENHANCEMENTS (ADD-ON ONLY)
+   Uses existing Ocean View theme variables
+   ========================================================= */
+
+/* Room card image area */
+.room-image {
+    height: 160px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, #e0f2f1, #ccfbf1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.room-image i {
+    font-size: 3rem;
+    color: var(--primary);
+}
+
+/* Room number */
+.room-number {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* Room type */
+.room-type {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* Price emphasis */
+.room-price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* Status badges */
+.room-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+}
+
+.room-status.available {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+.room-status.occupied {
+    background: #fef2f2;
+    color: #7f1d1d;
+}
+
+/* Card action buttons */
+.room-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.room-actions .btn {
+    flex: 1;
+}
+
+/* Empty state */
+.empty-state {
+    padding: 60px 30px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.empty-state i {
+    font-size: 3.5rem;
+    color: var(--primary);
+    margin-bottom: 16px;
+}
